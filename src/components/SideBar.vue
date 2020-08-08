@@ -52,8 +52,8 @@ export default {
         return response.json();
       }).then(data => {
         fetch(`${cors}https://www.metaweather.com/api/location/${data[0].woeid}`).then(data => {
-          this.weatherData = data.json();
-          console.log(this.weatherData,data.json());
+          this.weatherData = data;
+          console.log(this.weatherData,data);
         })
       })
     }
