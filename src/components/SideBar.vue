@@ -35,15 +35,15 @@ export default {
     };
 
     function success(pos) {
-      const coord = pos.coords;
-      that.getWeatherData(coord.latitude, coord.longitude);
+      const coords = pos.coords;
+      that.getWeatherData(coords.latitude, coords.longitude);
     }
 
-    function errer(err) {
+    function error(err) {
       console.warn(`ERROR(${err.code}): ${err.message}`)
     }
 
-    navigator.geolocation.getCurrentPosition(success, errer, options);
+    navigator.geolocation.getCurrentPosition(success, error, options);
   },
   methods: {
     getWeatherData(latitude, longitude) {
@@ -53,6 +53,7 @@ export default {
       }).then(data => {
         fetch(`${cors}https://www.metaweather.com/api/location/${data[0].woeid}`).then(data => {
           this.weatherData = data.json();
+          console.log(this.weatherData,data.json());
         })
       })
     }
