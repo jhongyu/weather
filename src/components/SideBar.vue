@@ -36,7 +36,7 @@ export default {
 
     function success(pos) {
       const coord = pos.coords;
-      that.getWeatherData(coord.lantitude, coord.longitude);
+      that.getWeatherData(coord.latitude, coord.longitude);
     }
 
     function errer(err) {
@@ -46,8 +46,8 @@ export default {
     navigator.geolocation.getCurrentPosition(success, errer, options);
   },
   methods: {
-    getWeatherData(lantitude, longitude) {
-      fetch(`https://www.metaweather.com/api/location/search/?lattlong=${lantitude},${longitude}`).then(location => {
+    getWeatherData(latitude, longitude) {
+      fetch(`https://www.metaweather.com/api/location/search/?lattlong=${latitude},${longitude}`).then(location => {
         fetch(`https://www.metaweather.com/api/location/${location.json().woeid}`).then(data => {
           this.weatherData = data.json();
         })
