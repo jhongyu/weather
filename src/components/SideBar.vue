@@ -23,7 +23,6 @@
 export default {
   data() {
     return {
-      cityId: '',
       weatherData: ''
     }
   },
@@ -37,7 +36,7 @@ export default {
 
     function success(pos) {
       const coord = pos.coords;
-      that.getCityId(coord.lantitude, coord.longitude);
+      that.getWeatherData(coord.lantitude, coord.longitude);
     }
 
     function errer(err) {
@@ -45,14 +44,13 @@ export default {
     }
 
     navigator.geolocation.getCurrentPosition(success, errer, options);
-    fetch(`https://www.metaweather.com/api/location/${that.cityId}`).then(data => {
-      that.weatherData = data;
-    })
   },
   methods: {
-    getCityId(lantitude, longitude) {
+    getWeatherData(lantitude, longitude) {
       fetch(`https://www.metaweather.com/api/location/search/?lattlong=${lantitude},${longitude}`).then(location => {
-        this.cityId = location.woeid;
+        fetch(`https://www.metaweather.com/api/location/${location.json().woeid}`).then(data => {
+          this.weatherData = data.json();
+        })
       })
     }
   }
