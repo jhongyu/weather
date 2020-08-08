@@ -26,7 +26,7 @@ export default {
       weatherData: ''
     }
   },
-  beforeMount() {
+  beforeCreate() {
     const that = this;
     const options = {
       enableHighAccuracy: true,
