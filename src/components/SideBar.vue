@@ -47,8 +47,9 @@ export default {
   },
   methods: {
     getWeatherData(latitude, longitude) {
-      fetch(`https://www.metaweather.com/api/location/search/?lattlong=${latitude},${longitude}`).then(location => {
-        fetch(`https://www.metaweather.com/api/location/${location.json().woeid}`).then(data => {
+      const cors = "https://cors-anywhere.herokuapp.com/";
+      fetch(`${cors}https://www.metaweather.com/api/location/search/?lattlong=${latitude},${longitude}`).then(location => {
+        fetch(`${cors}https://www.metaweather.com/api/location/${location.json().woeid}`).then(data => {
           this.weatherData = data.json();
         })
       })
