@@ -5,10 +5,10 @@
     </div>
     <div class="weather">
       <div class="img"></div>
-      <div class="temperature" v-if="weatherData">
+      <div class="temperature">
         {{ weatherData.consolidated_weather[0].the_temp }}
       </div>
-      <div class="description" v-if="weatherData">
+      <div class="description">
         {{ weatherData.consolidated_weather[0].weather_state_name }}
       </div>
     </div>
@@ -21,37 +21,28 @@
 
 <script>
 export default {
-  data() {
-    return {
-      weatherData: ''
-    }
-  },
-  beforeCreate() {
-    const that = this;
-    const options = {
-      enableHighAccuracy: true,
-      timeout: 5000,
-      maximumAge: 0
-    };
-
-    function success(pos) {
-      const coords = pos.coords;
-      that.getWeatherData(coords.latitude, coords.longitude);
-    }
-
-    function error(err) {
-      console.warn(`ERROR(${err.code}): ${err.message}`)
-    }
-
-    navigator.geolocation.getCurrentPosition(success, error, options);
-  },
-  methods: {
-    async getWeatherData(latitude, longitude) {
-      const cors = "https://cors-anywhere.herokuapp.com/";
-      let location = await (await fetch(`${cors}https://www.metaweather.com/api/location/search/?lattlong=${latitude},${longitude}`)).json();
-      let data = await (await fetch(`${cors}https://www.metaweather.com/api/location/${location[0].woeid}`)).json();
-      this.weatherData = data;
-    }
-  }
+  name: 'SideBar',
+  props: ['weatherData']
 }
 </script>
+
+<style>
+.container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  flex: 1;
+}
+
+.weather {
+  flex: 5;
+}
+
+.footer {
+  flex: 1;
+}
+</style>

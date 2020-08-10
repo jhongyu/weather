@@ -1,31 +1,103 @@
 <template>
-    <div id="app">
-        <img alt="Vue logo" src="./assets/logo.png" />
-        <HelloWorld msg="Welcome to Your Vue.js App" />
-        <side-bar></side-bar>
+  <div id="app" v-if="data">
+    <div class="sidebar">
+      <side-bar :weatherData="data"></side-bar>
     </div>
+    <div class="content">
+      <div class="top">
+        <div class="convertor">
+          <button>℃</button>
+          <button>℉</button>
+        </div>
+        <div class="card">
+          <weather-card
+            :key="item.id"
+            v-for="item in data.consolidated_weather"
+            :todayWeather="item"
+          ></weather-card>
+        </div>
+      </div>
+      <div class="down"></div>
+      <div class="footer"></div>
+    </div>
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
 import SideBar from './components/SideBar.vue'
+import WeatherCard from './components/WeatherCard.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld,
-    SideBar
+    SideBar,
+    WeatherCard
+  },
+  data() {
+    return {
+      data: ''
+    }
+  },
+  beforeCreate() {
+    const that = this;
+    const options = {
+      enableHighAccuracy: true,
+      timeout: 5000,
+      maximumAge: 0
+    };
+
+    function success(pos) {
+      const coords = pos.coords;
+      that.getWeatherData(coords.latitude, coords.longitude);
+    }
+
+    function error(err) {
+      console.warn(`ERROR(${err.code}): ${err.message}`)
+    }
+
+    navigator.geolocation.getCurrentPosition(success, error, options);
+  },
+  methods: {
+    async getWeatherData(latitude, longitude) {
+      const cors = "https://cors-anywhere.herokuapp.com/";
+      let location = await (await fetch(`${cors}https://www.metaweather.com/api/location/search/?lattlong=${latitude},${longitude}`)).json();
+      let data = await (await fetch(`${cors}https://www.metaweather.com/api/location/${location[0].woeid}`)).json();
+      this.data = data;
+    }
   }
 }
 </script>
 
 <style>
 #app {
-    font-family: Avenir, Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-    color: #2c3e50;
-    margin-top: 60px;
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+  display: flex;
+}
+
+#app .sidebar {
+  flex: 1;
+}
+
+#app .content {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+}
+
+.content .top {
+  flex: 3;
+}
+
+.content .down {
+  flex: 6;
+}
+
+.content .footer {
+  flex: 1;
 }
 </style>
