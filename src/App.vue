@@ -5,17 +5,7 @@
     </div>
     <div class="content">
       <div class="top">
-        <div class="convertor">
-          <button>℃</button>
-          <button>℉</button>
-        </div>
-        <div class="card">
-          <weather-card
-            :key="item.id"
-            v-for="item in data.consolidated_weather"
-            :todayWeather="item"
-          ></weather-card>
-        </div>
+        <weather :weather="data"></weather>
       </div>
       <div class="down"></div>
       <div class="footer"></div>
@@ -25,13 +15,13 @@
 
 <script>
 import SideBar from './components/SideBar.vue'
-import WeatherCard from './components/WeatherCard.vue'
+import Weather from './components/Weather.vue'
 
 export default {
   name: 'App',
   components: {
     SideBar,
-    WeatherCard
+    Weather
   },
   data() {
     return {
