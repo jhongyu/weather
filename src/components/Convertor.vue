@@ -15,3 +15,16 @@ export default {
   }
 }
 </script>
+
+<style>
+.convertor > button {
+  height: 35px;
+  width: 35px;
+  background-color: var(--button-background-color);
+  color: var(--text-color);
+  padding: 8px;
+  margin: 0 5px;
+  border: 1px solid var(--button-background-color);
+  border-radius: 50%;
+}
+</style>

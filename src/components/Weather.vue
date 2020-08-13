@@ -1,8 +1,8 @@
 <template>
-  <div class="weather" v-on:unit-changed="changeUnit">
+  <div class="weather">
     <div class="convertor">
-      <convertor unit="℃"></convertor>
-      <convertor unit="℉"></convertor>
+      <convertor unit="℃" @unit-changed="changeUnit"></convertor>
+      <convertor unit="℉" @unit-changed="changeUnit"></convertor>
     </div>
     <div class="card">
       <weather-card
@@ -48,10 +48,16 @@ export default {
 
 .convertor {
   flex: 1.5;
+  width: 80%;
+  margin-bottom: 30px;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .card {
+  width: 80%;
   flex: 2;
   display: flex;
+  justify-content: space-between;
 }
 </style>

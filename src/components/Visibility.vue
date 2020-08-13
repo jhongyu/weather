@@ -4,7 +4,7 @@
       <p>Visibility</p>
     </div>
     <div class="content">
-      <p>{{ weather.consolidated_weather[0].visibility }}miles</p>
+      <p>{{ visibility }}miles</p>
     </div>
   </div>
 </template>
@@ -12,7 +12,12 @@
 <script>
 export default {
   name: 'visibility',
-  props: ['weather']
+  props: ['weather'],
+  computed: {
+    visibility() {
+      return Math.round(this.weather.consolidated_weather[0].visibility * 10) / 10;
+    }
+  }
 }
 </script>
 
