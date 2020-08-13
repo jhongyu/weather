@@ -7,8 +7,18 @@
       <div class="top">
         <weather :weather="data"></weather>
       </div>
-      <div class="down"></div>
-      <div class="footer"></div>
+      <div class="down">
+        <h2>Today's Highlights</h2>
+        <div class="highlights">
+          <wind-status :weather="data"></wind-status>
+          <humidity :weather="data"></humidity>
+          <visibility :weather="data"></visibility>
+          <air-pressure :weather="data"></air-pressure>
+        </div>
+      </div>
+      <div class="footer">
+        <p>纪宏宇 @ DevChallenges.io</p>
+      </div>
     </div>
   </div>
 </template>
@@ -16,12 +26,20 @@
 <script>
 import SideBar from './components/SideBar.vue'
 import Weather from './components/Weather.vue'
+import WindStatus from './components/WindStatus.vue'
+import Humidity from './components/Humidity.vue'
+import Visibility from './components/Visibility.vue'
+import AirPressure from './components/AirPressure.vue'
 
 export default {
   name: 'App',
   components: {
     SideBar,
-    Weather
+    Weather,
+    WindStatus,
+    Humidity,
+    Visibility,
+    AirPressure
   },
   data() {
     return {
@@ -85,6 +103,18 @@ export default {
 
 .content .down {
   flex: 6;
+  display: flex;
+  flex-direction: column;
+}
+
+.down h2 {
+  flex: 1;
+}
+
+.down .highlights {
+  flex: 9;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }
 
 .content .footer {
